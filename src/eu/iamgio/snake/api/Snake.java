@@ -55,13 +55,17 @@ public class Snake
             switch(direction)
             {
                 case NORTH:
-                    part.setY(part.getY() + X_PER_MS);
-                case SOUTH:
                     part.setY(part.getY() - X_PER_MS);
+                    break;
+                case SOUTH:
+                    part.setY(part.getY() + X_PER_MS);
+                    break;
                 case WEST:
                     part.setX(part.getX() - X_PER_MS);
+                    break;
                 case EAST:
                     part.setX(part.getX() + X_PER_MS);
+                    break;
             }
         }
 
@@ -97,9 +101,13 @@ public class Snake
             switch(direction)
             {
                 case NORTH: part.setY(part.getY() - (30 * i));
-                case SOUTH: part.setY(part.getY() + (30 * i));
-                case WEST: part.setX(part.getX() + (30 * i));
-                case EAST: part.setX(part.getX() - (30 * i));
+                    break;
+                case SOUTH: part.setY(part.getY() - (30 * i));
+                    break;
+                case WEST: part.setX(part.getX() - (30 * i));
+                    break;
+                case EAST: part.setX(part.getX() + (30 * i));
+                    break;
             }
 
             parts[i] = part;
