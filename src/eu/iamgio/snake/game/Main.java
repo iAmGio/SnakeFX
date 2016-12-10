@@ -6,7 +6,7 @@ import eu.iamgio.libfx.api.JavaFX;
 import eu.iamgio.libfx.api.elements.SimpleStage;
 import eu.iamgio.snake.api.Game;
 import eu.iamgio.snake.game.animations.MenuAnimation;
-import eu.iamgio.snake.game.listeners.LoopListener;
+import eu.iamgio.snake.game.listeners.SnakeListener;
 import eu.iamgio.snake.game.listeners.MenuListeners;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -54,7 +54,7 @@ public class Main extends Application
         JavaFX.startDefaultEvents(scene);
 
         manager.registerEvents(new MenuListeners());
-        manager.registerEvents(new LoopListener());
+        manager.registerEvents(new SnakeListener());
     }
 
     /**
