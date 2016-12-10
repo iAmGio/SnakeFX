@@ -36,8 +36,8 @@ public class Snake
         x = 300;
         y = 200;
         snake = new Rectangle(x, y, 30, 30);
-        snake.setFill(Paint.valueOf("FFF"));
-        snake.setStrokeWidth(0);
+        snake.setFill(Paint.valueOf("E8E8E8"));
+        snake.setStrokeWidth(2);
         snake.setId("snake_head");
         game.getRoot().getChildren().add(snake);
 
@@ -82,35 +82,20 @@ public class Snake
 
     /**
      * Sets the length
-     * @param length Length
+     * @param part Snake part
      */
-    public void setLength(int length)
+    public void addPart(SnakePart part)
     {
-        this.length = length;
+        Rectangle rectangle = part.getValue();
+        Rectangle last = parts.get(parts.size() - 1);
 
-        Rectangle part = new Rectangle(parts.get(0).getX(), parts.get(0).getY(), 30, 30);
-        part.setFill(Paint.valueOf("FFF"));
-        part.setStrokeWidth(0);
-        part.setId("snakepart_" + parts.size());
+        rectangle.setX(last.getX() - 30);
+        rectangle.setY(last.getY());
 
-        parts.add(part);
-        game.getRoot().getChildren().add(part);
+        parts.add(rectangle);
+        game.getRoot().getChildren().add(rectangle);
 
-        switch(direction)
-        {
-            case NORTH:
-                part.setY(part.getY() - (30 * (parts.size()-1)));
-                break;
-            case SOUTH:
-                part.setY(part.getY() - (30 * (parts.size()-1)));
-                break;
-            case WEST:
-                part.setX(part.getX() - (30 * (parts.size()-1)));
-                break;
-            case EAST:
-                part.setX(part.getX() + (30 * (parts.size()-1)));
-                break;
-        }
+        length++;
     }
 
     /**
@@ -127,6 +112,15 @@ public class Snake
      */
     public void setDirection(Direction direction)
     {
+        if(getLength() > 1)
+            if(
+                 (this.direction == Direction.NORTH && direction == Direction.SOUTH) ||
+                 (this.direction == Direction.SOUTH && direction == Direction.NORTH) ||
+                 (this.direction == Direction.EAST && direction == Direction.WEST) ||
+                 (this.direction == Direction.WEST && direction == Direction.EAST)
+              )
+                return;
+
         this.direction = direction;
     }
 

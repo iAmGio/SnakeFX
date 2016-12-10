@@ -5,6 +5,7 @@ import eu.iamgio.customevents.api.Listener;
 import eu.iamgio.snake.api.Direction;
 import eu.iamgio.snake.api.Game;
 import eu.iamgio.snake.api.Snake;
+import eu.iamgio.snake.api.SnakePart;
 import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
 import eu.iamgio.snake.game.Main;
@@ -36,8 +37,13 @@ public class SnakeListener implements Listener
             game.getFood().delete();
             game.getFood().spawnRandomly();
 
-            snake.setLength(snake.getLength() + 1);
+            for(int i = 0; i<3; i++)
+                snake.addPart(new SnakePart(snake));
+
+            return;
         }
+
+
     }
 
     @EventHandler
