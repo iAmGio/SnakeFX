@@ -4,6 +4,8 @@ import eu.iamgio.snake.game.Main;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 /**
  * Created by Gio on 09/12/2016.
  */
@@ -19,7 +21,7 @@ public class Snake
 
     private int points = 0;
 
-    private Rectangle[] parts = new Rectangle[length];
+    private ArrayList<Rectangle> parts = new ArrayList<>();
 
     Snake()
     {
@@ -31,16 +33,15 @@ public class Snake
      */
     void spawn()
     {
-        x = 300; y = 200;
+        x = 300;
+        y = 200;
         snake = new Rectangle(x, y, 30, 30);
         snake.setFill(Paint.valueOf("FFF"));
         snake.setStrokeWidth(0);
         snake.setId("snake_head");
         game.getRoot().getChildren().add(snake);
 
-        parts[0] = snake;
-
-        setLength(length);
+        parts.add(snake);
     }
 
     /**
@@ -51,7 +52,6 @@ public class Snake
         final double X_PER_MS = 5;
 
         for(Rectangle part : parts)
-        {
             switch(direction)
             {
                 case NORTH:
@@ -67,9 +67,9 @@ public class Snake
                     part.setX(part.getX() + X_PER_MS);
                     break;
             }
-        }
 
-        x = snake.getX(); y = snake.getY();
+        x = snake.getX();
+        y = snake.getY();
     }
 
     /**
@@ -87,31 +87,29 @@ public class Snake
     public void setLength(int length)
     {
         this.length = length;
-        parts = new Rectangle[length];
 
-        parts[0] = snake;
+        Rectangle part = new Rectangle(parts.get(0).getX(), parts.get(0).getY(), 30, 30);
+        part.setFill(Paint.valueOf("FFF"));
+        part.setStrokeWidth(0);
+        part.setId("snakepart_" + parts.size());
 
-        for(int i = 1; i<length; i++)
+        parts.add(part);
+        game.getRoot().getChildren().add(part);
+
+        switch(direction)
         {
-            Rectangle part = new Rectangle(snake.getX(), snake.getY(), 30, 30);
-            part.setFill(Paint.valueOf("FFF"));
-            part.setStrokeWidth(0);
-            part.setId("snakepart_" + i);
-
-            switch(direction)
-            {
-                case NORTH: part.setY(part.getY() - (30 * i));
-                    break;
-                case SOUTH: part.setY(part.getY() - (30 * i));
-                    break;
-                case WEST: part.setX(part.getX() - (30 * i));
-                    break;
-                case EAST: part.setX(part.getX() + (30 * i));
-                    break;
-            }
-
-            parts[i] = part;
-            game.getRoot().getChildren().add(part);
+            case NORTH:
+                part.setY(part.getY() - (30 * (parts.size()-1)));
+                break;
+            case SOUTH:
+                part.setY(part.getY() - (30 * (parts.size()-1)));
+                break;
+            case WEST:
+                part.setX(part.getX() - (30 * (parts.size()-1)));
+                break;
+            case EAST:
+                part.setX(part.getX() + (30 * (parts.size()-1)));
+                break;
         }
     }
 
@@ -168,7 +166,7 @@ public class Snake
     /**
      * @return Snake's parts
      */
-    public Rectangle[] getParts()
+    public ArrayList<Rectangle> getParts()
     {
         return parts;
     }

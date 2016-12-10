@@ -38,6 +38,7 @@ public class Food
     public void delete()
     {
         Main.getGame().getRoot().getChildren().remove(circle);
+        x = 0; y = 0;
     }
 
     /**
@@ -54,5 +55,13 @@ public class Food
     public int getY()
     {
         return y;
+    }
+
+    /**
+     * @return The circle
+     */
+    public Circle getCircle()
+    {
+        return circle;
     }
 }

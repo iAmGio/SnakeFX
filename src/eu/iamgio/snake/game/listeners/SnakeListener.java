@@ -9,6 +9,8 @@ import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
 import eu.iamgio.snake.game.Main;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
 
 /**
  * Created by Gio on 10/12/2016.
@@ -23,16 +25,19 @@ public class SnakeListener implements Listener
 
         snake.move();
 
-        if(snake.getX() >= 1000 || snake.getX() <= 0 || snake.getY() >= 700 || snake.getY() <= 0)
+        if(snake.getX() >= 1000 || snake.getX() <= -30 || snake.getY() >= 700 || snake.getY() <= -30)
         {
             game.end();
             return;
         }
 
-        /*if(snake.getX() == +- game.getFood().getX())
+        if(((Path) Shape.intersect(snake.getParts().get(0), game.getFood().getCircle())).getElements().size() > 0)
         {
-            System.out.println("a");
-        }*/
+            game.getFood().delete();
+            game.getFood().spawnRandomly();
+
+            snake.setLength(snake.getLength() + 1);
+        }
     }
 
     @EventHandler
