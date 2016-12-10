@@ -19,7 +19,6 @@ public class MenuListeners implements Listener
             if(e.getMouseEvent().getTarget() != null)
             {
                 Node node = (Node) e.getMouseEvent().getTarget();
-                System.out.println(node.getId());
                 if(node.getId() != null && node.getId().equals("all_play_rectangle"))
                 {
                     Game game = new Game();

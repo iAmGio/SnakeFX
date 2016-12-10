@@ -5,5 +5,5 @@ package eu.iamgio.snake.api;
  */
 public enum Direction
 {
-    NORTH, SOUTH, WEST, EST
+    NORTH, SOUTH, WEST, EAST
 }

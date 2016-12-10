@@ -2,7 +2,7 @@ package eu.iamgio.snake.api;
 
 import eu.iamgio.snake.game.Main;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ import java.util.Random;
 public class Food
 {
     private int x, y;
-    private Rectangle rectangle;
+    private Circle circle;
 
     /**
      * Spawns a food randomly
@@ -24,12 +24,12 @@ public class Food
         x = new Random().nextInt(1000 - 30);
         y = new Random().nextInt(700 - 30);
 
-        rectangle = new Rectangle(x, y, 20, 20);
-        rectangle.setFill(Paint.valueOf("FFF"));
-        rectangle.setStrokeWidth(0);
-        rectangle.setId("food");
+        circle = new Circle(x, y, 10);
+        circle.setFill(Paint.valueOf("FFF"));
+        circle.setStrokeWidth(0);
+        circle.setId("food");
 
-        game.getRoot().getChildren().add(rectangle);
+        game.getRoot().getChildren().add(circle);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Food
      */
     public void delete()
     {
-        Main.getGame().getRoot().getChildren().remove(rectangle);
+        Main.getGame().getRoot().getChildren().remove(circle);
     }
 
     /**

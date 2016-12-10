@@ -10,12 +10,16 @@ import javafx.scene.shape.Rectangle;
 public class Snake
 {
     private int length = 1;
-    private Direction direction = Direction.EST;
+    private Direction direction = Direction.EAST;
 
     private Game game;
     private Rectangle snake;
 
     private double x, y;
+
+    private int points = 0;
+
+    private Rectangle[] parts = new Rectangle[length];
 
     Snake()
     {
@@ -33,6 +37,10 @@ public class Snake
         snake.setStrokeWidth(0);
         snake.setId("snake_head");
         game.getRoot().getChildren().add(snake);
+
+        parts[0] = snake;
+
+        setLength(length);
     }
 
     /**
@@ -42,14 +50,20 @@ public class Snake
     {
         final double X_PER_MS = 5;
 
-        if(direction == Direction.NORTH)
-            snake.setY(snake.getY() + X_PER_MS);
-        else if(direction == Direction.SOUTH)
-            snake.setY(snake.getY() - X_PER_MS);
-        else if(direction == Direction.WEST)
-            snake.setX(snake.getX() - X_PER_MS);
-        else if(direction == Direction.EST)
-            snake.setX(snake.getX() + X_PER_MS);
+        for(Rectangle part : parts)
+        {
+            switch(direction)
+            {
+                case NORTH:
+                    part.setY(part.getY() + X_PER_MS);
+                case SOUTH:
+                    part.setY(part.getY() - X_PER_MS);
+                case WEST:
+                    part.setX(part.getX() - X_PER_MS);
+                case EAST:
+                    part.setX(part.getX() + X_PER_MS);
+            }
+        }
 
         x = snake.getX(); y = snake.getY();
     }
@@ -69,6 +83,28 @@ public class Snake
     public void setLength(int length)
     {
         this.length = length;
+        parts = new Rectangle[length];
+
+        parts[0] = snake;
+
+        for(int i = 1; i<length; i++)
+        {
+            Rectangle part = new Rectangle(snake.getX(), snake.getY(), 30, 30);
+            part.setFill(Paint.valueOf("FFF"));
+            part.setStrokeWidth(0);
+            part.setId("snakepart_" + i);
+
+            switch(direction)
+            {
+                case NORTH: part.setY(part.getY() - (30 * i));
+                case SOUTH: part.setY(part.getY() + (30 * i));
+                case WEST: part.setX(part.getX() + (30 * i));
+                case EAST: part.setX(part.getX() - (30 * i));
+            }
+
+            parts[i] = part;
+            game.getRoot().getChildren().add(part);
+        }
     }
 
     /**
@@ -102,5 +138,30 @@ public class Snake
     public double getY()
     {
         return y;
+    }
+
+    /**
+     * @return Snake's points
+     */
+    public int getPoints()
+    {
+        return points;
+    }
+
+    /**
+     * Sets the points
+     * @param points Points
+     */
+    public void setPoints(int points)
+    {
+        this.points = points;
+    }
+
+    /**
+     * @return Snake's parts
+     */
+    public Rectangle[] getParts()
+    {
+        return parts;
     }
 }
