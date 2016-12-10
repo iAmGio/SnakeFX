@@ -12,6 +12,7 @@ import java.util.Random;
 public class Food
 {
     private int x, y;
+    private Rectangle rectangle;
 
     /**
      * Spawns a food randomly
@@ -23,11 +24,20 @@ public class Food
         x = new Random().nextInt(1000 - 30);
         y = new Random().nextInt(700 - 30);
 
-        Rectangle rectangle = new Rectangle(x, y, 30, 30);
+        rectangle = new Rectangle(x, y, 20, 20);
         rectangle.setFill(Paint.valueOf("FFF"));
         rectangle.setStrokeWidth(0);
+        rectangle.setId("food");
 
         game.getRoot().getChildren().add(rectangle);
+    }
+
+    /**
+     * Deletes the food
+     */
+    public void delete()
+    {
+        Main.getGame().getRoot().getChildren().remove(rectangle);
     }
 
     /**

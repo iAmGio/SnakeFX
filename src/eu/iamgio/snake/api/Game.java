@@ -16,6 +16,7 @@ public class Game
     private boolean active;
 
     private Snake snake;
+    private Food food;
 
     private Parent root;
 
@@ -37,8 +38,11 @@ public class Game
 
         Main.stage.setScene(scene);
 
-        new Food().spawnRandomly();
+        food = new Food();
+        food.spawnRandomly();
         Loop.LoopManager.start();
+
+        snake.spawn();
     }
 
     /**
@@ -59,6 +63,26 @@ public class Game
         return snake;
     }
 
+    /**
+     * @return Current food
+     */
+    public Food getFood()
+    {
+        return food;
+    }
+
+    /**
+     * Sets the food
+     * @param food Food
+     */
+    public void setFood(Food food)
+    {
+        this.food = food;
+    }
+
+    /**
+     * @return Root
+     */
     public Pane getRoot()
     {
         return (Pane) root;
