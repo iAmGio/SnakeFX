@@ -4,6 +4,7 @@ import eu.iamgio.libfx.api.FXML;
 import eu.iamgio.libfx.api.JavaFX;
 import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
+import eu.iamgio.snake.api.movements.Movement;
 import eu.iamgio.snake.game.Main;
 import eu.iamgio.snake.game.animations.MenuAnimation;
 import javafx.scene.Parent;
@@ -43,6 +44,8 @@ public class Game
         food = new Food();
         food.spawnRandomly();
         Loop.LoopManager.start();
+
+        Movement.Recorder.createSession();
 
         scene.setOnKeyPressed(e -> JavaFX.getEventManager().callEvent(new KeyPressEvent(e)));
 

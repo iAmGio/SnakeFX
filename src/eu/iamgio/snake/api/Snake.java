@@ -1,5 +1,6 @@
 package eu.iamgio.snake.api;
 
+import eu.iamgio.snake.api.movements.Movement;
 import eu.iamgio.snake.game.Main;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -81,7 +82,7 @@ public class Snake
     }
 
     /**
-     * Sets the length
+     * Adds a part
      * @param part Snake part
      */
     public void addPart(SnakePart part)
@@ -112,7 +113,7 @@ public class Snake
      */
     public void setDirection(Direction direction)
     {
-        if(getLength() > 1)
+        if(length > 1)
             if(
                  (this.direction == Direction.NORTH && direction == Direction.SOUTH) ||
                  (this.direction == Direction.SOUTH && direction == Direction.NORTH) ||
@@ -122,6 +123,8 @@ public class Snake
                 return;
 
         this.direction = direction;
+
+        Movement.Recorder.record(this);
     }
 
     /**

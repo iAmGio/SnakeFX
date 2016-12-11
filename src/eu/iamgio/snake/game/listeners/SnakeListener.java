@@ -8,9 +8,11 @@ import eu.iamgio.snake.api.Snake;
 import eu.iamgio.snake.api.SnakePart;
 import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
+import eu.iamgio.snake.api.movements.Movement;
 import eu.iamgio.snake.game.Main;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
@@ -43,6 +45,20 @@ public class SnakeListener implements Listener
             return;
         }
 
+        for(int i = 1; i<snake.getParts().size(); i++)
+        {
+            Rectangle current = snake.getParts().get(i);
+            if(Movement.getMovements().containsKey(current.getX()))
+                if(Movement.getMovements().get(current.getX()) == current.getY())
+                {
+                    switch(snake.getDirection())
+                    {
+                        case SOUTH:
+                            current.setX(snake.getX());
+                            current.setY(snake.getY() + 30);
+                    }
+                }
+        }
 
     }
 
