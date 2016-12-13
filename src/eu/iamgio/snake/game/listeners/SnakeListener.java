@@ -43,11 +43,7 @@ public class SnakeListener implements Listener
             return;
         }
 
-        for(int i = 0; i<snake.getParts().size(); i++)
-        {
-            SnakePart part = snake.getParts().get(i);
-            part.setDirection(snake.getDirection());
-        }
+        SnakePart.update();
     }
 
     @EventHandler
@@ -64,7 +60,5 @@ public class SnakeListener implements Listener
             snake.setDirection(Direction.WEST);
         else if(code == KeyCode.RIGHT || code == KeyCode.D)
             snake.setDirection(Direction.EAST);
-        else
-            return;
     }
 }

@@ -11,45 +11,18 @@ public class SnakePart
 {
     private Snake snake;
     private Rectangle rectangle;
-    private Direction direction;
 
-    public SnakePart(Snake snake, boolean first)
+    SnakePart(Snake snake, boolean first)
     {
         this.snake = snake;
 
         rectangle = new Rectangle(first ? 300 : snake.getLastPart().getValue().getX(),
                 first ? 200 : snake.getLastPart().getValue().getY(), 30, 30);
         rectangle.setFill(Paint.valueOf("FFF"));
-        if(!first) rectangle.setStrokeWidth(5);
+        //if(!first) rectangle.setStrokeWidth(5);
         rectangle.setStroke(Paint.valueOf("000"));
         rectangle.setId("snakepart_" + snake.getParts().size());
 
-        if(!first)
-        {
-            SnakePart last = snake.getLastPart();
-
-            switch(last.getDirection())
-            {
-                case NORTH:
-                    rectangle.setY(last.getValue().getY() + 30);
-                    direction = Direction.NORTH;
-                    break;
-                case SOUTH:
-                    rectangle.setY(last.getValue().getY() - 30);
-                    direction = Direction.SOUTH;
-                    break;
-                case WEST:
-                    rectangle.setX(last.getValue().getX() + 30);
-                    direction = Direction.WEST;
-                    break;
-                case EAST:
-                    rectangle.setX(last.getValue().getX() - 30);
-                    direction = Direction.EAST;
-                    break;
-            }
-        }
-        else
-            direction = snake.getDirection();
 
         Main.getGame().getRoot().getChildren().add(rectangle);
     }
@@ -63,19 +36,16 @@ public class SnakePart
     }
 
     /**
-     * @return The direction
+     * Updates the snake
      */
-    public Direction getDirection()
+    public static void update()
     {
-        return direction;
-    }
-
-    /**
-     * Sets the direction
-     * @param direction Direction
-     */
-    public void setDirection(Direction direction)
-    {
-        this.direction = direction;
+        for(int i = Main.getGame().getSnake().getLength()-1; i>0; i--)
+        {
+            Rectangle part = Main.getGame().getSnake().getParts().get(i).getValue();
+            Rectangle target = Main.getGame().getSnake().getParts().get(i-1).getValue();
+            part.setX(target.getX());
+            part.setY(target.getY());
+        }
     }
 }

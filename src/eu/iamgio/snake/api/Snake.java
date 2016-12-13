@@ -47,25 +47,20 @@ public class Snake
     {
         final double DISTANCE_PER_MS = 5;
 
-        for(SnakePart snakePart : parts)
+        switch(direction)
         {
-            Rectangle part = snakePart.getValue();
-
-            switch(snakePart.getDirection())
-            {
-                case NORTH:
-                    part.setY(part.getY() - DISTANCE_PER_MS);
-                    break;
-                case SOUTH:
-                    part.setY(part.getY() + DISTANCE_PER_MS);
-                    break;
-                case WEST:
-                    part.setX(part.getX() - DISTANCE_PER_MS);
-                    break;
-                case EAST:
-                    part.setX(part.getX() + DISTANCE_PER_MS);
-                    break;
-            }
+            case NORTH:
+                snake.setY(snake.getY() - DISTANCE_PER_MS);
+                break;
+            case SOUTH:
+                snake.setY(snake.getY() + DISTANCE_PER_MS);
+                break;
+            case WEST:
+                snake.setX(snake.getX() - DISTANCE_PER_MS);
+                break;
+            case EAST:
+                snake.setX(snake.getX() + DISTANCE_PER_MS);
+                break;
         }
 
         x = snake.getX();
