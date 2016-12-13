@@ -1,8 +1,6 @@
 package eu.iamgio.snake.api;
 
-import eu.iamgio.snake.api.movements.Movement;
 import eu.iamgio.snake.game.Main;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class Snake
 
     private int points = 0;
 
-    private ArrayList<Rectangle> parts = new ArrayList<>();
+    private ArrayList<SnakePart> parts = new ArrayList<>();
 
     Snake()
     {
@@ -36,13 +34,10 @@ public class Snake
     {
         x = 300;
         y = 200;
-        snake = new Rectangle(x, y, 30, 30);
-        snake.setFill(Paint.valueOf("E8E8E8"));
-        snake.setStrokeWidth(2);
-        snake.setId("snake_head");
-        game.getRoot().getChildren().add(snake);
 
-        parts.add(snake);
+        SnakePart initial = new SnakePart(this, true);
+        snake = initial.getValue();
+        parts.add(initial);
     }
 
     /**
@@ -52,8 +47,20 @@ public class Snake
     {
         final double X_PER_MS = 5;
 
-        for(Rectangle part : parts)
-            switch(direction)
+        for(SnakePart snakePart : parts)
+        {
+            //try
+            //{
+            //    TimeUnit.MILLISECONDS.sleep(100);
+            //}
+            //catch(InterruptedException e)
+            //{
+            //    e.printStackTrace();
+            //}
+
+            Rectangle part = snakePart.getValue();
+
+            switch(snakePart.getDirection())
             {
                 case NORTH:
                     part.setY(part.getY() - X_PER_MS);
@@ -68,6 +75,7 @@ public class Snake
                     part.setX(part.getX() + X_PER_MS);
                     break;
             }
+        }
 
         x = snake.getX();
         y = snake.getY();
@@ -83,19 +91,10 @@ public class Snake
 
     /**
      * Adds a part
-     * @param part Snake part
      */
-    public void addPart(SnakePart part)
+    public void addPart()
     {
-        Rectangle rectangle = part.getValue();
-        Rectangle last = parts.get(parts.size() - 1);
-
-        rectangle.setX(last.getX() - 30);
-        rectangle.setY(last.getY());
-
-        parts.add(rectangle);
-        game.getRoot().getChildren().add(rectangle);
-
+        parts.add(new SnakePart(this, false));
         length++;
     }
 
@@ -123,8 +122,6 @@ public class Snake
                 return;
 
         this.direction = direction;
-
-        Movement.Recorder.record(this);
     }
 
     /**
@@ -163,8 +160,16 @@ public class Snake
     /**
      * @return Snake's parts
      */
-    public ArrayList<Rectangle> getParts()
+    public ArrayList<SnakePart> getParts()
     {
         return parts;
+    }
+
+    /**
+     * @return The last part
+     */
+    public SnakePart getLastPart()
+    {
+        return getParts().get(getParts().size() - 1);
     }
 }

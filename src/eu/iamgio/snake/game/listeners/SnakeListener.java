@@ -8,11 +8,9 @@ import eu.iamgio.snake.api.Snake;
 import eu.iamgio.snake.api.SnakePart;
 import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
-import eu.iamgio.snake.api.movements.Movement;
 import eu.iamgio.snake.game.Main;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
@@ -34,30 +32,21 @@ public class SnakeListener implements Listener
             return;
         }
 
-        if(((Path) Shape.intersect(snake.getParts().get(0), game.getFood().getCircle())).getElements().size() > 0)
+        if(((Path) Shape.intersect(snake.getParts().get(0).getValue(), game.getFood().getCircle())).getElements().size() > 0)
         {
             game.getFood().delete();
             game.getFood().spawnRandomly();
 
             for(int i = 0; i<3; i++)
-                snake.addPart(new SnakePart(snake));
+                snake.addPart();
 
             return;
         }
 
-        for(int i = 1; i<snake.getParts().size(); i++)
+        for(int i = 0; i<snake.getParts().size(); i++)
         {
-            Rectangle current = snake.getParts().get(i);
-            if(Movement.getMovements().containsKey(current.getX()))
-                if(Movement.getMovements().get(current.getX()) == current.getY())
-                {
-                    switch(snake.getDirection())
-                    {
-                        case SOUTH:
-                            current.setX(snake.getX());
-                            current.setY(snake.getY() + 30);
-                    }
-                }
+            SnakePart part = snake.getParts().get(i);
+            part.setDirection(snake.getDirection());
         }
 
     }
@@ -70,11 +59,13 @@ public class SnakeListener implements Listener
 
         if(code == KeyCode.UP || code == KeyCode.W)
             snake.setDirection(Direction.NORTH);
-        if(code == KeyCode.DOWN || code == KeyCode.S)
+        else if(code == KeyCode.DOWN || code == KeyCode.S)
             snake.setDirection(Direction.SOUTH);
-        if(code == KeyCode.LEFT || code == KeyCode.A)
+        else if(code == KeyCode.LEFT || code == KeyCode.A)
             snake.setDirection(Direction.WEST);
-        if(code == KeyCode.RIGHT || code == KeyCode.D)
+        else if(code == KeyCode.RIGHT || code == KeyCode.D)
             snake.setDirection(Direction.EAST);
+        else
+            return;
     }
 }
