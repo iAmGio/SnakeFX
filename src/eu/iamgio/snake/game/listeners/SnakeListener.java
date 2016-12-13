@@ -48,7 +48,6 @@ public class SnakeListener implements Listener
             SnakePart part = snake.getParts().get(i);
             part.setDirection(snake.getDirection());
         }
-
     }
 
     @EventHandler

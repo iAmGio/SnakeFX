@@ -45,34 +45,25 @@ public class Snake
      */
     public void move()
     {
-        final double X_PER_MS = 5;
+        final double DISTANCE_PER_MS = 5;
 
         for(SnakePart snakePart : parts)
         {
-            //try
-            //{
-            //    TimeUnit.MILLISECONDS.sleep(100);
-            //}
-            //catch(InterruptedException e)
-            //{
-            //    e.printStackTrace();
-            //}
-
             Rectangle part = snakePart.getValue();
 
             switch(snakePart.getDirection())
             {
                 case NORTH:
-                    part.setY(part.getY() - X_PER_MS);
+                    part.setY(part.getY() - DISTANCE_PER_MS);
                     break;
                 case SOUTH:
-                    part.setY(part.getY() + X_PER_MS);
+                    part.setY(part.getY() + DISTANCE_PER_MS);
                     break;
                 case WEST:
-                    part.setX(part.getX() - X_PER_MS);
+                    part.setX(part.getX() - DISTANCE_PER_MS);
                     break;
                 case EAST:
-                    part.setX(part.getX() + X_PER_MS);
+                    part.setX(part.getX() + DISTANCE_PER_MS);
                     break;
             }
         }
@@ -87,6 +78,15 @@ public class Snake
     public int getLength()
     {
         return length;
+    }
+
+    /**
+     * Sets the length
+     * @param length Length
+     */
+    public void setLength(int length)
+    {
+        this.length = length;
     }
 
     /**
