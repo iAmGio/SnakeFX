@@ -11,6 +11,7 @@ public class SnakePart
 {
     private Snake snake;
     private Rectangle rectangle;
+    private Direction direction;
 
     SnakePart(Snake snake, boolean first)
     {
@@ -19,10 +20,14 @@ public class SnakePart
         rectangle = new Rectangle(first ? 300 : snake.getLastPart().getValue().getX(),
                 first ? 200 : snake.getLastPart().getValue().getY(), 30, 30);
         rectangle.setFill(Paint.valueOf("FFF"));
-        //if(!first) rectangle.setStrokeWidth(5);
-        rectangle.setStroke(Paint.valueOf("000"));
+        rectangle.setStrokeWidth(0);
+
         rectangle.setId("snakepart_" + snake.getParts().size());
 
+        if(first)
+            direction = Direction.EAST;
+        else
+            direction = snake.getDirection();
 
         Main.getGame().getRoot().getChildren().add(rectangle);
     }
@@ -36,16 +41,34 @@ public class SnakePart
     }
 
     /**
+     * @return Snakepart direction
+     */
+    public Direction getDirection()
+    {
+        return direction;
+    }
+
+    /**
+     * Sets the direction
+     * @param direction Direction
+     */
+    private void setDirection(Direction direction)
+    {
+        this.direction = direction;
+    }
+
+    /**
      * Updates the snake
      */
     public static void update()
     {
         for(int i = Main.getGame().getSnake().getLength()-1; i>0; i--)
         {
-            Rectangle part = Main.getGame().getSnake().getParts().get(i).getValue();
+            SnakePart part = Main.getGame().getSnake().getParts().get(i);
             Rectangle target = Main.getGame().getSnake().getParts().get(i-1).getValue();
-            part.setX(target.getX());
-            part.setY(target.getY());
+            part.getValue().setX(target.getX());
+            part.getValue().setY(target.getY());
+            part.setDirection(Main.getGame().getSnake().getDirection());
         }
     }
 }

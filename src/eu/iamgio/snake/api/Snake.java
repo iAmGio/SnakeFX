@@ -1,7 +1,10 @@
 package eu.iamgio.snake.api;
 
+import eu.iamgio.libfx.api.JavaFX;
 import eu.iamgio.snake.game.Main;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -166,5 +169,48 @@ public class Snake
     public SnakePart getLastPart()
     {
         return getParts().get(getParts().size() - 1);
+    }
+
+    /**
+     * @return True if it intersects the food
+     */
+    public boolean intersectsFood()
+    {
+        return
+                ((Path) Shape.intersect(getParts().get(0).getValue(), game.getFood().getCircle()))
+                        .getElements().size() > 0;
+    }
+
+    /**
+     * @return True if it intersects itself
+     */
+    public boolean intersectsItself()
+    {
+        for(int i = 5; i<length; i++)
+        {
+            if(JavaFX.fromId("snakepart_" + i) != null)
+            {
+                SnakePart part = parts.get(i);
+
+                if(part.getDirection() != getDirection())
+                    if(((Path) Shape.intersect(parts.get(0).getValue(), part.getValue())).getElements().size() > 4)
+                    {
+                        return true;
+                    }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Eats the food and adds the parts
+     */
+    public void eat()
+    {
+        game.getFood().delete();
+        game.getFood().spawnRandomly();
+
+        for(int i = 0; i<8; i++)
+            addPart();
     }
 }

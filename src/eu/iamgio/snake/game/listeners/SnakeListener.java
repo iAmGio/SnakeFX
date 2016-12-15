@@ -10,8 +10,6 @@ import eu.iamgio.snake.api.events.KeyPressEvent;
 import eu.iamgio.snake.api.events.Loop;
 import eu.iamgio.snake.game.Main;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 
 /**
  * Created by Gio on 10/12/2016.
@@ -32,14 +30,17 @@ public class SnakeListener implements Listener
             return;
         }
 
-        if(((Path) Shape.intersect(snake.getParts().get(0).getValue(), game.getFood().getCircle())).getElements().size() > 0)
+        if(snake.intersectsFood())
         {
-            game.getFood().delete();
-            game.getFood().spawnRandomly();
+            snake.eat();
+            SnakePart.update();
+            return;
+        }
 
-            for(int i = 0; i<3; i++)
-                snake.addPart();
-
+        if(snake.intersectsItself())
+        {
+            System.out.println(snake.getParts().get(1).getValue().getId());
+            game.end();
             return;
         }
 

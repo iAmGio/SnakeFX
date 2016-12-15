@@ -26,7 +26,7 @@ public class Food
 
         circle = new Circle(x, y, 10);
         circle.setFill(Paint.valueOf("FFF"));
-        circle.setStrokeWidth(0);
+        circle.setStrokeWidth(1);
         circle.setId("food");
 
         game.getRoot().getChildren().add(circle);
